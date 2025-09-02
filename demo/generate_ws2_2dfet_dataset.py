@@ -10,10 +10,14 @@ def ensure_dir(path: Path) -> None:
     path.mkdir(parents=True, exist_ok=True)
 
 
-def write_variables_csv(sample_dir: Path, params: dict) -> None:
+# (In demo/generate_ws2_2dfet_dataset.py)
+# REPLACE the old write_variables_csv function
+
+def write_variables_csv(sample_dir: Path, params: dict, keys_to_write: list) -> None:
     lines = []
-    for key in params:
-        lines.append(f"{key}={params[key]}\n")
+    for key in keys_to_write:
+        if key in params:
+            lines.append(f"{key}={params[key]}\n")
     (sample_dir / "variables.csv").write_text("".join(lines), encoding="utf-8")
 
 
@@ -105,7 +109,13 @@ def run_one_device(sample_dir: Path, params: dict) -> None:
         save_idvg(sample_dir, vd, Vgs, Id_uA_per_um)
 
     # Save variables.csv last
-    write_variables_csv(sample_dir, params)
+    # write_variables_csv(sample_dir, params)
+    # (In demo/generate_ws2_2dfet_dataset.py, inside run_one_device)
+# ... (at the end of the function)
+
+# Save variables.csv last, but only the 3 we varied
+    varied_params = ["Ef_V", "Lg_nm", "scatteringmfp_nm"]
+    write_variables_csv(sample_dir, params, varied_params)
 
 
 def sample_params(rng: np.random.Generator) -> dict:
@@ -118,7 +128,7 @@ def sample_params(rng: np.random.Generator) -> dict:
     alphag = 0.9
     alphad = 0.03
     temperature_K = 300.0
-    gVI = -6.0
+    gVI = 0.35
     gVF = 50.0
     gNV = 32
 
@@ -152,7 +162,7 @@ def main():
     rng = np.random.default_rng(19700101)
 
     repo_root = Path(__file__).resolve().parents[1]
-    out_root = repo_root / "data" / "raw_2dfet"
+    out_root = repo_root / "data" / "raw"
     ensure_dir(out_root)
 
     # Number of devices to generate can be set via env var, default 1000

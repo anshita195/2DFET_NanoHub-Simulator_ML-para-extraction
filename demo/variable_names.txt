@@ -1,8 +1,3 @@
-mobility
-chi0
-DOSpeak
-DonorConc
-DonorEmid
-DonorEsig
-bandtailconc
-bandtailwidth
+Ef_V
+Lg_nm
+scatteringmfp_nm

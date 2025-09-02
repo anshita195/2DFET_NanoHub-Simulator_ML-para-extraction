@@ -325,6 +325,10 @@ def extract_folder(dir_name, V, n_points, num_IdVg, num_feats, minval):
     Y_array = []
     num_saves = 0
     for subdir in subdirs:
+
+        if not os.path.isdir(subdir):
+            continue  # This will skip _manifest.json and any other files
+
         if counter%crit_mass == 0 and counter > 1:
             num_saves += 1
             X_array_final.append(X_array)

@@ -5,12 +5,12 @@
     "n_points": 32,
     "num_IdVg": 2,
     "num_feats": 4,
-    "Vmin": -5.9,
+    "Vmin": 0.35,
     "Vmax": 49.9,
     "minval": 5e-11,
     "Xscaling_name": "Xscaling.dat",
     "Yscaling_name": "Yscaling.dat",
-    "N_test": 1000
+    "N_test": 100
   },
   "forward_model": {
     "lr0_forward": 1e-3,

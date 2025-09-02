@@ -1,7 +1,0 @@
-{
-  "num_devices": 1000,
-  "seed": 19700101,
-  "material": "WS2",
-  "transport_model": "with scattering",
-  "output_root": "E:\\projects\\BTP-6\\data\\raw_2dfet"
-}
