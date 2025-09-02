@@ -1,0 +1,15 @@
+Material=WS2
+CMOS=e
+channel=x
+tins_nm=300.0
+epsr=3.9
+Ef_V=0.6667067363737902
+alphag=0.9
+alphad=0.03
+Lg_nm=10000.0
+scatteringmfp_nm=73.33613323576756
+temperature_K=300.0
+gVI=-6.0
+gVF=50.0
+gNV=32
+Vd_values=[0.1, 1.0]
