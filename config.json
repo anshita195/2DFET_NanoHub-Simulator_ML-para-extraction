@@ -7,7 +7,7 @@
     "num_feats": 4,
     "Vmin": 0.35,
     "Vmax": 49.9,
-    "minval": 5e-11,
+    "minval": 7e-16,
     "Xscaling_name": "Xscaling.dat",
     "Yscaling_name": "Yscaling.dat",
     "N_test": 100
