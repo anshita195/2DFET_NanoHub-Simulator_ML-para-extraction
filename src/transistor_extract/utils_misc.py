@@ -399,9 +399,14 @@ def build_x_array(x, filename, V, minval):
         data = np.loadtxt(filename, usecols=range(2)).T
         data[1] = np.abs(data[1])
 
-    Id = interpolate_data([data[0], data[1]], V, logscale=False)
+    # Get the raw current data
+    current_data = data[1]
+    # Apply a floor to the data BEFORE taking the log to prevent -inf values
+    current_data[np.abs(current_data) < minval] = minval
+
+    Id = interpolate_data([data[0], current_data], V, logscale=False)
     Id_log = interpolate_data(
-                              [data[0], np.log10(np.abs(data[1]))],
+                              [data[0], np.log10(np.abs(current_data))],
                               V,
                               logscale=False
                               )
@@ -421,6 +426,38 @@ def build_x_array(x, filename, V, minval):
                         Id_grad_log,
                         ))
     return x
+
+# def build_x_array(x, filename, V, minval):
+#     # sentaurus and hemt simulations are formatted differently, so we need to
+#     # use different calls to load the data
+#     if cfg["data"]["simtype"] == 'sentaurus':
+#         data = np.loadtxt(filename, skiprows=1, delimiter=',').T
+#     elif cfg["data"]["simtype"] == 'hemt':
+#         data = np.loadtxt(filename, usecols=range(2)).T
+#         data[1] = np.abs(data[1])
+
+#     Id = interpolate_data([data[0], data[1]], V, logscale=False)
+#     Id_log = interpolate_data(
+#                               [data[0], np.log10(np.abs(data[1]))],
+#                               V,
+#                               logscale=False
+#                               )
+
+#     indices = np.where(Id < minval)
+#     Id[indices] = minval
+#     indices = np.where(Id_log < np.log10(minval))
+#     Id_log[indices] = np.log10(minval)
+
+#     Id_grad = np.gradient(Id, V)
+#     Id_grad_log = np.gradient(Id_log, V)
+
+#     x = np.concatenate((x,
+#                         Id,
+#                         Id_log,
+#                         Id_grad,
+#                         Id_grad_log,
+#                         ))
+#     return x
 
 
 def build_y_array(filename):

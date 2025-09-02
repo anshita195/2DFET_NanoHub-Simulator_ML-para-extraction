@@ -128,7 +128,7 @@ def sample_params(rng: np.random.Generator) -> dict:
     alphag = 0.9
     alphad = 0.03
     temperature_K = 300.0
-    gVI = 0.35
+    gVI = 1.1
     gVF = 50.0
     gNV = 32
 

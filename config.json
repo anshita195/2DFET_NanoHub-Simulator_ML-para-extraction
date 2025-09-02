@@ -5,9 +5,9 @@
     "n_points": 32,
     "num_IdVg": 2,
     "num_feats": 4,
-    "Vmin": 0.35,
+    "Vmin": 1.1,
     "Vmax": 49.9,
-    "minval": 7e-16,
+    "minval": 5e-11,
     "Xscaling_name": "Xscaling.dat",
     "Yscaling_name": "Yscaling.dat",
     "N_test": 100

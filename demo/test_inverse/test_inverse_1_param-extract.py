@@ -29,6 +29,9 @@ mpl.rcParams['xtick.direction'] = 'in'
 mpl.rcParams['ytick.direction'] = 'in'
 mpl.rcParams['lines.markersize'] = 5
 
+# Make the results folder if it doesn't exist
+os.makedirs(os.path.join(dir_path, 'inverse_results'), exist_ok=True)
+
 repo_root = Path(__file__).resolve().parents[2]
 processed_data_loc = str(repo_root / 'data' / 'processed')
 config_path = os.path.join(repo_root, "config.json")
@@ -71,38 +74,67 @@ Yscaling = np.loadtxt(processed_data_loc + '/Yscaling.dat')
 Ymins = Yscaling[0,:]
 Ymaxs = Yscaling[1,:]
 
+# Y_pred = np.array(model_inverse.predict(X_test))[:, 0:cfg["data"]["num_params"]]
+
+# fig, axs = plt.subplots(1,3, figsize = (7,2))
+
+# ticks = [
+#           [0, 15, 30], 
+#           [0, 125, 250, 375, 500], 
+#           [0,0.5,1],
+#           [0,1,2,3],
+#           [0, 50, 100, 150, 200],
+#           [0, 50, 100, 150, 200],
+#           [0, 1, 2, 3],
+#           [50, 175, 300],
+#           ]
+# # subset = range(250)
+# subset = range(len(X_test))
+
+
+# variables = [
+#             'Mobility (cm$^2$  V$^{-1}$ s $^{-1}$)',
+#             'Schottky barrier height (meV)',
+#             'Effective density of states ($\\times 10^{13}$ cm$^{-2}$)',
+#             'Peak donor density ($\\times$ 10$^{13}$ cm$^{-2}$ eV$^{-1}$)',
+#             'Donor energy mid (meV below conduction band edge)', 
+#             'Donor energy width (meV)',
+#             'Peak acceptor band tail density ($\\times$ 10$^{13}$ cm$^{-2}$ eV$^{-1}$)',
+#             'Acceptor band tail energy width (meV)',
+#             ]
+
+# variable_names = np.loadtxt(dir_path + '/../variable_names.txt', dtype = 'str')
+
+# for j in range(8):
+#     fig, axs = plt.subplots(1,2, figsize = (3.5, 2.25))
+# ... (previous code)
+
 Y_pred = np.array(model_inverse.predict(X_test))[:, 0:cfg["data"]["num_params"]]
 
 fig, axs = plt.subplots(1,3, figsize = (7,2))
 
+# Updated ticks for 3 parameters
 ticks = [
-          [0, 15, 30], 
-          [0, 125, 250, 375, 500], 
-          [0,0.5,1],
-          [0,1,2,3],
-          [0, 50, 100, 150, 200],
-          [0, 50, 100, 150, 200],
-          [0, 1, 2, 3],
-          [50, 175, 300],
-          ]
-subset = range(250)
+    [0.1, 0.8, 1.5],
+    [300, 5000, 10000],
+    [10, 130, 250],
+]
 
+subset = range(len(X_test))
 
+# Updated variable names for 3 parameters
 variables = [
-            'Mobility (cm$^2$  V$^{-1}$ s $^{-1}$)',
-            'Schottky barrier height (meV)',
-            'Effective density of states ($\\times 10^{13}$ cm$^{-2}$)',
-            'Peak donor density ($\\times$ 10$^{13}$ cm$^{-2}$ eV$^{-1}$)',
-            'Donor energy mid (meV below conduction band edge)', 
-            'Donor energy width (meV)',
-            'Peak acceptor band tail density ($\\times$ 10$^{13}$ cm$^{-2}$ eV$^{-1}$)',
-            'Acceptor band tail energy width (meV)',
-            ]
+    'Threshold Voltage (V)',
+    'Gate length (nm)',
+    'Scattering mean free path (nm)',
+]
 
 variable_names = np.loadtxt(dir_path + '/../variable_names.txt', dtype = 'str')
 
-for j in range(8):
+# Updated loop to use the number of parameters from the config file
+for j in range(cfg["data"]["num_params"]):
     fig, axs = plt.subplots(1,2, figsize = (3.5, 2.25))
+    # ... (rest of the script)
     plt.subplots_adjust(left = 0.13, top = 0.71, right = 0.9, bottom = 0.175, hspace = 0.5, wspace = 0.7)
     Ymin = Ymins[j]
     Ymax = Ymaxs[j]

@@ -377,7 +377,8 @@ def surrogate_loss(Y_true, Y_pred):
     Y_pred[:, 0:cfg["data"]["num_params"]]
     )
 
-    Id_true = Y_true[:, 8:] 
+    # Id_true = Y_true[:, 8:] 
+    Id_true = Y_true[:, cfg["data"]["num_params"]:]
 
     Id_pred = model_forward_pretrained(Y_pred[:, 0:cfg["data"]["num_params"]])
     Id_pred = tf.transpose(Id_pred, perm=[0, 2, 1])
