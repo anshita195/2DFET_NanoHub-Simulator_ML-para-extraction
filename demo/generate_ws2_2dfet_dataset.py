@@ -20,7 +20,7 @@ def write_variables_csv(sample_dir: Path, params: dict) -> None:
 def save_idvg(sample_dir: Path, vd_value: float, vgs: np.ndarray, id_a_per_um: np.ndarray) -> None:
     # Must match data/README.md: header "x","y" and values are Vgs [V], Id [uA/um]
     out_path = sample_dir / f"IdVg_Vds={vd_value}.csv"
-    # Compose CSV with header and rows
+    # Compose CSV with header an    d rows
     with out_path.open("w", encoding="utf-8") as f:
         f.write('"x","y"\n')
         for x, y in zip(vgs, id_a_per_um):

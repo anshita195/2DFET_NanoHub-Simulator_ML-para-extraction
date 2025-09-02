@@ -28,10 +28,9 @@ pip install -e .
 To create and activate a virtual environment:  
 
 ```bash
-python3 -m pip install --upgrade pip
-python3 -m pip install virtualenv
-python3 -m virtualenv venv
-source venv/bin/activate   # On Linux/Mac
+python -m pip install --upgrade pip
+python -m pip install virtualenv
+python -m virtualenv venv
 venv\Scripts\activate      # On Windows
 ```
 

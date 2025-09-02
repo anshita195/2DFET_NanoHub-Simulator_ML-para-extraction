@@ -1,6 +1,6 @@
 {
   "data": {
-    "num_params": 8,
+    "num_params": 3,
     "simtype": "sentaurus",
     "n_points": 32,
     "num_IdVg": 2,
