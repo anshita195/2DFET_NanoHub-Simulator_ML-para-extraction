@@ -1,0 +1,42 @@
+# compiled numpy arrays
+*.npy
+
+# data files containing scaling parameters
+X_scaling.dat
+Y_scaling.dat
+
+# all generated plots
+*.png
+
+# processed data
+data/processed
+
+# pycache and swp
+__pycache__/
+*.swp
+
+# all .egg-info files
+*.egg-info/
+
+# compiling this is a work in progress; will update later
+official_results/
+
+# all trained models except for ones in ./models
+*.keras
+!models/*.keras
+
+# all results folders
+demo/test_forward/forward_results
+demo/test_inverse/inverse_results
+
+data/processed/
+env/
+# virtual environment
+venv/
+# Ignore all contents of the raw data folder by default
+data/raw/
+models/
+# Now, create exceptions to KEEP the folders from 00000 to 00500
+# !data/raw/000??
+# !data/raw/00[1-4]??
+# !data/raw/00500
