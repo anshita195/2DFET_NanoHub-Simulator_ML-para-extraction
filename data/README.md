@@ -1,7 +1,3 @@
-## About the data
-The data provided in [data/raw](data/raw) is raw data from Sentaurus simulations. 
-Specifically, we have 26,000 Sentaurus simulations, with eight fitting parameters
-chosen between random values as described in [our preprint](https://arxiv.org/abs/2507.05134).
 
 ## Data layout
 Each directory within [data/raw](data/raw) corresponds to a single transistor and 
@@ -20,9 +16,6 @@ The latter two csv files are formatted as:
 6.55052,2.23486e-10
 ...
 
-where the first column is the gate bias (unit: V), and the second column is
-the resultant drain current [unit: uA/um]. We use the first 25,000 devices to 
-build our training/dev sets, and the last 1,000 devices to build our test set. 
 
 ## Processing data
 See the supplemental information in the preprint for details on how we process
