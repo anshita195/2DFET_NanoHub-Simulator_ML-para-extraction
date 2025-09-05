@@ -1,6 +1,6 @@
 # compiled numpy arrays
 *.npy
-
+.dat
 # data files containing scaling parameters
 X_scaling.dat
 Y_scaling.dat
@@ -36,6 +36,8 @@ venv/
 # Ignore all contents of the raw data folder by default
 data/raw/
 models/
+fits_forward
+fits_inverse
 # Now, create exceptions to KEEP the folders from 00000 to 00500
 # !data/raw/000??
 # !data/raw/00[1-4]??

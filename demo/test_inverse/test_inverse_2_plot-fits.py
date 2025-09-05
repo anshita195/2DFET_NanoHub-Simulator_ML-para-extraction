@@ -37,7 +37,7 @@ plt.rcParams["xtick.top"] = True
 plt.rcParams["ytick.right"] = True
 mpl.rcParams['xtick.direction'] = 'in'
 mpl.rcParams['ytick.direction'] = 'in'
-mpl.rcParams['lines.markersize'] = 10
+mpl.rcParams['lines.markersize'] = 7
 
 ###############################################################################
 #
@@ -94,7 +94,7 @@ Id_1000_log_actual = data_actual[3]
 fig, ax1 = plt.subplots(1,1)
 ax2 = ax1.twinx()
 
-start, stop, skip = 0, 32, 3
+start, stop, skip = 0, 32, 1
 zorder_pred = 100001
 zorder_actual = 10000
 actual_OLcolor = 'k'
@@ -201,4 +201,8 @@ ax1.semilogy(
 plt.tight_layout()
 plt.savefig(dir_path + '/inverse_results/reverse_engineered_fit_quantile={}_R2={}.png'.format(quantile, float(target_error)))
 plt.close()
+
+
+
+
 

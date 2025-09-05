@@ -68,7 +68,7 @@ def run_one_device(sample_dir: Path, params: dict) -> None:
     Vfb = params["Ef_V"]
     alphag = params["alphag"]
     alphad = params["alphad"]
-    transport_model = "with scattering"
+    transport_model = params["transport_model"]
     Lg_nm = params["Lg_nm"]
     mfp_nm = params["scatteringmfp_nm"]
     T = params["temperature_K"]
@@ -113,8 +113,8 @@ def run_one_device(sample_dir: Path, params: dict) -> None:
     # (In demo/generate_ws2_2dfet_dataset.py, inside run_one_device)
 # ... (at the end of the function)
 
-# Save variables.csv last, but only the 3 we varied
-    varied_params = ["Ef_V", "Lg_nm", "scatteringmfp_nm"]
+# Save variables.csv last, but only the 1 we varied
+    varied_params = ["Lg_nm"]
     write_variables_csv(sample_dir, params, varied_params)
 
 
@@ -132,11 +132,20 @@ def sample_params(rng: np.random.Generator) -> dict:
     gVF = 50.0
     gNV = 32
 
-    # Varying params
-    Ef_V = rng.uniform(0.1, 1.5)
-    scatteringmfp_nm = rng.uniform(10.0, 250.0)
+    # Varying params - now only Lg_nm varies
+    Ef_V = 0.3  # Fixed constant
     Lg_choices = np.array([300, 500, 750, 1000, 3000, 5000, 10000], dtype=float)
+    # More Lg_nm choices for better resolution
+    #Lg_choices = np.array([300, 400, 500, 600, 750, 1000, 1500, 2000, 3000, 4000, 5000, 7000, 10000], dtype=float)
     Lg_nm = float(rng.choice(Lg_choices))
+    
+    # Conditional scatteringmfp_nm based on Lg_nm
+    if Lg_nm <= 500:  # 300, 500 nm
+        scatteringmfp_nm = 100.0
+        transport_model = "ballistic"
+    else:  # 750, 1000, 3000, 5000, 10000 nm
+        scatteringmfp_nm = 700.0
+        transport_model = "with scattering"
 
     return {
         "Material": Material,
@@ -154,6 +163,7 @@ def sample_params(rng: np.random.Generator) -> dict:
         "gVF": gVF,
         "gNV": gNV,
         "Vd_values": [0.1, 1.0],
+        "transport_model": transport_model,
     }
 
 

@@ -70,7 +70,7 @@ scale = 10**6
 fig, ax1 = plt.subplots(1,1)
 ax2 = ax1.twinx()
 
-start, stop, skip = 0, 32, 3
+start, stop, skip = 0, 32, 1
 
 zorder_pred = 10001
 zorder_actual = 10000

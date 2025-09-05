@@ -71,8 +71,13 @@ Xmins = Xscaling[0,:]
 Xmaxs = Xscaling[1,:]
 
 Yscaling = np.loadtxt(processed_data_loc + '/Yscaling.dat')
-Ymins = Yscaling[0,:]
-Ymaxs = Yscaling[1,:]
+# Handle Yscaling which is now 1D for single parameter
+if Yscaling.ndim == 1:
+    Ymins = [Yscaling[0]]
+    Ymaxs = [Yscaling[1]]
+else:
+    Ymins = Yscaling[0,:]
+    Ymaxs = Yscaling[1,:]
 
 # Y_pred = np.array(model_inverse.predict(X_test))[:, 0:cfg["data"]["num_params"]]
 
@@ -111,54 +116,35 @@ Ymaxs = Yscaling[1,:]
 
 Y_pred = np.array(model_inverse.predict(X_test))[:, 0:cfg["data"]["num_params"]]
 
-fig, axs = plt.subplots(1,3, figsize = (7,2))
+fig, axs = plt.subplots(1,1, figsize = (3.5,2.25))
 
-# Updated ticks for 3 parameters
+# Updated ticks for 1 parameter - only key values
 ticks = [
-    [0.1, 0.8, 1.5],
     [300, 5000, 10000],
-    [10, 130, 250],
 ]
 
 subset = range(len(X_test))
 
-# Updated variable names for 3 parameters
+# Updated variable names for 1 parameter
 variables = [
-    'Threshold Voltage (V)',
     'Gate length (nm)',
-    'Scattering mean free path (nm)',
 ]
 
 variable_names = np.loadtxt(dir_path + '/../variable_names.txt', dtype = 'str')
+# Ensure variable_names is always an array, even for single parameter
+if variable_names.ndim == 0:
+    variable_names = np.array([variable_names])
 
 # Updated loop to use the number of parameters from the config file
 for j in range(cfg["data"]["num_params"]):
     fig, axs = plt.subplots(1,2, figsize = (3.5, 2.25))
-    # ... (rest of the script)
     plt.subplots_adjust(left = 0.13, top = 0.71, right = 0.9, bottom = 0.175, hspace = 0.5, wspace = 0.7)
     Ymin = Ymins[j]
     Ymax = Ymaxs[j]
 
-    if j in [2]:
-        Ymin*=6.15e-8 / 1e13
-        Ymax*=6.15e-8 / 1e13
-    elif j in [3]:
-        Ymin/= 1e13
-        Ymax/=1e13
-    if j in [6]:
-        Ymin*=6.15e-8 / 1e13
-        Ymax*=6.15e-8 / 1e13
-    elif j in [4,5,7]:
-        Ymin *= 1000
-        Ymax *= 1000
-
+    # For Lg_nm (j=0), no special scaling needed
     Y_test[:,j] = TE.unscale_vector(Y_test[:,j], Ymin, Ymax)
     Y_pred[:,j] = TE.unscale_vector(Y_pred[:,j], Ymin, Ymax)
-    if j == 1:
-        Y_test[:,j] = 5000 - 1000*Y_test[:,j]
-        Y_pred[:,j] = 5000 - 1000*Y_pred[:,j]
-        Ymin = 0
-        Ymax = 500
 
 
 
@@ -167,7 +153,7 @@ for j in range(cfg["data"]["num_params"]):
             Y_pred[subset,j], 
             marker = 'o', 
             ls = 'None',
-            markersize = 4,
+            markersize = 3,
             color = 'k',
             markerfacecolor = purple,
             markeredgewidth = 0.4
@@ -211,7 +197,7 @@ for j in range(cfg["data"]["num_params"]):
                  round(std, 3)),
              fontsize=fontsize)
     
-    plt.savefig(dir_path + '/inverse_results/{}.png'.format(variable_names[j]), transparent = True)
+    plt.savefig(dir_path + '/inverse_results/{}.png'.format(variable_names[j]), transparent = False)
     plt.close()
 
 

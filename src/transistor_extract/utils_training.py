@@ -469,8 +469,13 @@ def augment_data(
     # load scaling parameters
     Xmins = Xscaling[0,:]
     Xmaxs = Xscaling[1,:]
-    Ymins = Yscaling[0,:]
-    Ymaxs = Yscaling[1,:]
+    # Handle Yscaling which is now 1D for single parameter
+    if Yscaling.ndim == 1:
+        Ymins = [Yscaling[0]]
+        Ymaxs = [Yscaling[1]]
+    else:
+        Ymins = Yscaling[0,:]
+        Ymaxs = Yscaling[1,:]
 
     # unscale the currents
     currents_unscaled = copy.deepcopy(currents_generated)

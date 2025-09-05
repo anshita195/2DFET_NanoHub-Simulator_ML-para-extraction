@@ -285,8 +285,13 @@ def test_model_inverse_current(
     Xmins = Xscaling[0,:]
     Xmaxs = Xscaling[1,:]
 
-    Ymin = Yscaling[0,:]
-    Ymax = Yscaling[1,:]
+    # Handle Yscaling which is now 1D for single parameter
+    if Yscaling.ndim == 1:
+        Ymin = [Yscaling[0]]
+        Ymax = [Yscaling[1]]
+    else:
+        Ymin = Yscaling[0,:]
+        Ymax = Yscaling[1,:]
 
     Z_pred = np.array(model_inverse.predict(X_test))
     X_pred = np.array(model_forward.predict(Z_pred[:, 0:cfg["data"]["num_params"]]))
@@ -457,8 +462,13 @@ def test_model_forward(
     Xmins = Xscaling[0,:]
     Xmaxs = Xscaling[1,:]
 
-    Ymin = Yscaling[0,:]
-    Ymax = Yscaling[1,:]
+    # Handle Yscaling which is now 1D for single parameter
+    if Yscaling.ndim == 1:
+        Ymin = [Yscaling[0]]
+        Ymax = [Yscaling[1]]
+    else:
+        Ymin = Yscaling[0,:]
+        Ymax = Yscaling[1,:]
 
     counts_train = []
     counts_dev = []
